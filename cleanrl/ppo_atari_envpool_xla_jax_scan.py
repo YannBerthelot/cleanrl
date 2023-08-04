@@ -359,7 +359,7 @@ if __name__ == "__main__":
 
         # Value loss
         v_loss = 0.5 * ((newvalue - mb_returns) ** 2).mean()
-
+        jax.debug.print("loss:{v_loss} value:{newvalue} returns:{mb_returns}", v_loss=v_loss, newvalue=newvalue.mean(), mb_returns = mb_returns.mean())
         entropy_loss = entropy.mean()
         loss = pg_loss - args.ent_coef * entropy_loss + v_loss * args.vf_coef
         return loss, (pg_loss, v_loss, entropy_loss, jax.lax.stop_gradient(approx_kl))
